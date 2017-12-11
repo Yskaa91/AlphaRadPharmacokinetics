@@ -33,7 +33,7 @@ doplot = F
 # for (prefix in c("HUM195", "Liposomes", "Polymersomes", "Trastuzumab", "LaPO4", "LaPO4_Gold", "Theoretical", "Theoretical2", "PSMA")) {
 for (prefix in c("TheoreticalPSMA", "TheoreticalTRAS", "TheoreticalPLMS", "TheoreticalLPS", "TheoreticalLAPO4", "TheoreticalGOLD")) {
 # for (prefix in c("Liposomes", "Polymersomes")) {
-  source(file=paste("Carriers/Simplified/Settings/", prefix, "_settings.R", sep=""), local = TRUE)
+  source(file=paste("Simplified/Settings/", prefix, "_settings.R", sep=""), local = TRUE)
   
   ## Calculate free isotopes
   caprod = 0
@@ -134,7 +134,7 @@ for (prefix in c("TheoreticalPSMA", "TheoreticalTRAS", "TheoreticalPLMS", "Theor
       miny = min(miny[miny > 0])
       maxy = max(N[,Norg,])
       if (Norg != Id_Clearance) {
-        Cairo(width = 700, height = 400, file=paste('Carriers/Plots/', Tprefix ,'/', prefix, '_', OrgNames[Norg], '.png', sep=''), type="png")
+        Cairo(width = 700, height = 400, file=paste('Plots/', Tprefix ,'/', prefix, '_', OrgNames[Norg], '.png', sep=''), type="png")
         plot(t_seq/3600, A[,Norg,1]/OrgV[Norg], log="xy", col=IsoCols[1], ylim=c(plot_min, plot_max), xlim=c(t_seq[2], max(t_seq))/3600,
              type="l", xlab="h", ylab="#kBq/mL", main=OrgNames[Norg], lwd=2)
         grid(nx = NULL, ny = NULL, col = "lightgray", lty = "dotted", lwd = par("lwd"), equilogs = TRUE)
@@ -148,7 +148,7 @@ for (prefix in c("TheoreticalPSMA", "TheoreticalTRAS", "TheoreticalPLMS", "Theor
       } else {
         if (tmax > clearph) {
           c_ind = tail(t_seq %% clearph == 0, -1)
-          Cairo(width = 700, height = 400, file=paste('Carriers/Plots/', Tprefix ,'/', prefix, '_', OrgNames[Norg], '.png', sep=''), type="png")
+          Cairo(width = 700, height = 400, file=paste('Plots/', Tprefix ,'/', prefix, '_', OrgNames[Norg], '.png', sep=''), type="png")
           plot(t_seq[c_ind]/3600, A[c_ind,Norg,1]/OrgV[Norg], log="xy", col=IsoCols[1], ylim=c(1E-10, 1E5), xlim=c(min(t_seq[c_ind]), max(t_seq))/3600,
                type="p", xlab="h", ylab="#kBq/mL", main=OrgNames[Norg])
           grid(nx = NULL, ny = NULL, col = "lightgray", lty = "dotted", lwd = par("lwd"), equilogs = TRUE)
@@ -165,7 +165,7 @@ for (prefix in c("TheoreticalPSMA", "TheoreticalTRAS", "TheoreticalPLMS", "Theor
     }
   }
   
-  filename = paste('Carriers/CSV/', Tprefix ,'_', prefix, '.csv', sep='')
+  filename = paste('CSV/', Tprefix ,'_', prefix, '.csv', sep='')
   cat("MBq-Hr/MBq\n\"Organ\",", file = filename, append = FALSE)
   write.table(MBqHrMbq, file = filename, row.names=OrgNames, na="", col.names=IsoNames, sep=",", append="true")
   cat("\n", file = filename, append = TRUE)
